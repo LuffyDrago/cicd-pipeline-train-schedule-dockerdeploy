@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("vickvick/train-schedule1")
+                    app = docker.build("vickvick/train-schedule")
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
                     }
@@ -54,7 +54,7 @@ pipeline {
 
             script { 
 
-                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker pull vickvick/train-schedule1:${env.BUILD_NUMBER}\"" 
+                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker pull vickvick/train-schedule:${env.BUILD_NUMBER}\"" 
 
                 try { 
 
@@ -68,7 +68,7 @@ pipeline {
 
                 } 
 
-                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker run --restart always --name train-schedule -p 8080:8080 -d vickvick/train-schedule1:${env.BUILD_NUMBER}\"" 
+                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker run --restart always --name train-schedule -p 8080:8080 -d vickvick/train-schedule:${env.BUILD_NUMBER}\"" 
 
             } 
 
